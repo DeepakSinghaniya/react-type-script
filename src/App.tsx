@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import  { useEffect, useLayoutEffect, useRef, useState, forwardRef,useImperativeHandle } from 'react';
+
+
+type MyInputHandles = {
+  myFocus: ()=> void;
+}
+
+const MyInputBox = forwardRef<MyInputHandles, {name: string}>( (props:{name:string}, myRef) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useImperativeHandle(myRef, ()=>{
+    return {
+      myFocus: ()=>{
+        if(inputRef.current) {
+        inputRef.current.focus();
+        }
+      }
+    };
+  });
+
+  
+  return <input ref={inputRef} type="text" name={props.name} />
+});
 
 function App() {
+  const inputRef:any = useRef(null);
+
+  useEffect(()=>{
+    inputRef.current?.myFocus();
+    console.log(inputRef);
+  },[]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button>focus</button>
+
+  <MyInputBox ref={inputRef} name="name" />
     </div>
   );
 }
