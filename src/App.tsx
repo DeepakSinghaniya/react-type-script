@@ -1,39 +1,18 @@
-import  { useEffect, useLayoutEffect, useRef, useState, forwardRef,useImperativeHandle } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { RootState } from './';
+import {inc, dec} from './store/productSlice';
 
 
-type MyInputHandles = {
-  myFocus: ()=> void;
-}
 
-const MyInputBox = forwardRef<MyInputHandles, {name: string}>( (props:{name:string}, myRef) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useImperativeHandle(myRef, ()=>{
-    return {
-      myFocus: ()=>{
-        if(inputRef.current) {
-        inputRef.current.focus();
-        }
-      }
-    };
-  });
-
-  
-  return <input ref={inputRef} type="text" name={props.name} />
-});
-
-function App() {
-  const inputRef:any = useRef(null);
-
-  useEffect(()=>{
-    inputRef.current?.myFocus();
-    console.log(inputRef);
-  },[]);
+const App = () => {
+const dispatch = useDispatch();
+const count = useSelector((state: RootState)=> state.products.count);
   return (
     <div>
-      <button>focus</button>
-
-  <MyInputBox ref={inputRef} name="name" />
+     <h1>Welcome</h1>
+     <h2>{count}</h2>
+     <button onClick={()=>dispatch(inc())}>++</button>
+     <button onClick={()=>dispatch(dec())}>--</button>
     </div>
   );
 }
