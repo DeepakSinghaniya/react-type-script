@@ -6,7 +6,7 @@ const initialState = {
   users: { list: [], status: "", error: false },
 };
 
-export const getUsers = createAsyncThunk("getUsers", async () => {
+export const getUsers = createAsyncThunk("users/getUser", async () => {
   const response = await axios.get(
     "https://jsonplaceholder.typicode.com/postss"
   );
