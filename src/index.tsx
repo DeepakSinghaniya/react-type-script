@@ -6,13 +6,13 @@ import App from './App';
 import productReducer from './store/productSlice';
 
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     products: productReducer,
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
