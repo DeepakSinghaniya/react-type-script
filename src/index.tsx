@@ -4,6 +4,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 import App from './App';
 import productReducer from './store/productSlice';
+import { BrowserRouter } from 'react-router-dom';
 
 
 export const store = configureStore({
@@ -21,7 +22,7 @@ root.render(
   
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+      <BrowserRouter><App /></BrowserRouter>
     </Provider>
    </React.StrictMode>
 );
