@@ -1,15 +1,15 @@
 import axios from "axios";
 import { BASE_URL } from "../config";
 
-// const token = localStorage.getItem(token);
+const token: string | null = localStorage.getItem("token");
 
 const publicAxios = axios.create({
   baseURL: BASE_URL,
 });
-// const proAxios = new axios.create({
-//   baseURL: BASE_URL,
-//   headers: { "x-access-token": token },
-// });
+export const proAxios = axios.create({
+  baseURL: BASE_URL,
+  headers: { "x-access-token": token ? token : "" },
+});
 
 type User = {
   name: string;
@@ -31,4 +31,12 @@ export const signIn = (user: { email: string; password: string }) => {
     email: user.email,
     password: user.password,
   });
+};
+
+export const addProduct = (product: {
+  name: string;
+  description: string;
+  inStock: boolean;
+}) => {
+  return proAxios.post("/products/", product);
 };
