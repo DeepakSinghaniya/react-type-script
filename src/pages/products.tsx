@@ -1,11 +1,15 @@
+import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { useEffect } from "react";
-import { addProduct } from "../store/api";
+import { useAppDispatch } from "../store/hooks";
+import { createProducts } from "../store/productSlice";
+
 
 const Products = () => {
+    const dispatch = useAppDispatch();
     useEffect(() => {
-        addProduct({ name: 'est', description: 'dec', inStock: false });
+        dispatch(createProducts({ name: 'est', description: 'dec', inStock: false }));
     }, []);
-    return <div>Products</div>
+    return <div>Products product to create</div>
 }
 
 export default Products;

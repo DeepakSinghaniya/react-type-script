@@ -1,7 +1,9 @@
 import { FC } from "react";
 import { signIn } from '../store/api';
+import { useDispatch } from 'react-redux';
 
 export const Login: FC = () => {
+  const dispatch = useDispatch();
   const signInSubmit = (e: any) => {
     e.preventDefault();
     signIn({ email: e.target.elements.email.value, password: e.target.elements.password.value }).then(res => {
@@ -21,6 +23,7 @@ export const Login: FC = () => {
         <input type='text' name="password" placeholder="password" />
         <button>Submit</button>
       </form>
+      <button onClick={() => { dispatch({ type: "ok", payload: 10 }) }}>Click me</button>
     </div>
   );
 };

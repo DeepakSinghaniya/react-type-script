@@ -1,51 +1,44 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk, Action, ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { Product } from "../allTypes";
+import { addProduct } from "./api";
+
 
 const initialState = {
-  count: 0,
-  users: { list: [], status: "", error: false },
+  products: { list: [], isloading: false, error: false },
 };
 
-export const getUsers = createAsyncThunk("users/getUser", async () => {
-  const response = await axios.get(
-    "https://jsonplaceholder.typicode.com/postss"
-  );
+export const createProducts = createAsyncThunk("products", async (data: Product) => {
+  const response = await addProduct(data);
   return response.data;
 });
 
-export const counterSlice = createSlice({
-  name: "Counter",
+export const productSlice = createSlice({
+  name: "Product",
   initialState: initialState,
   reducers: {
-    inc: (state) => {
-      state.count = state.count + 1;
-      return state;
-    },
-    dec: (state) => {
-      state.count = state.count - 1;
-      return state;
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getUsers.pending, (state, actions) => {
-      state.users.status = "pending";
+
+    builder.addCase(createProducts.pending, (state, action) => {
+      state.products.isloading = true;
       return state;
     });
-    builder.addCase(getUsers.fulfilled, (state, actions) => {
-      state.users.status = "fulfilled";
-      state.users.list = actions.payload;
+    builder.addCase(createProducts.fulfilled, (state, action) => {
+      state.products.list = action.payload
+      state.products.isloading = false;
+
       return state;
     });
-    builder.addCase(getUsers.rejected, (state, actions) => {
-      state.users.status = "rejected";
-      state.users.error = true;
+    builder.addCase(createProducts.rejected, (state, action) => {
+      state.products.isloading = false;
+      state.products.error = true;
       return state;
     });
+
   },
 });
 
-export const { inc, dec } = counterSlice.actions;
 
-const productReducer = counterSlice.reducer;
+const productReducer = productSlice.reducer;
 
 export default productReducer;

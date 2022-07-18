@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Product } from "../allTypes";
 import { BASE_URL } from "../config";
 
 const publicAxios = axios.create({
@@ -30,10 +31,6 @@ export const signIn = (user: { email: string; password: string }) => {
   });
 };
 
-export const addProduct = (product: {
-  name: string;
-  description: string;
-  inStock: boolean;
-}) => {
+export const addProduct = (product: Product) => {
   return proAxios.post("/products/", product);
 };
