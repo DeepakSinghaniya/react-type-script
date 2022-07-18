@@ -1,14 +1,11 @@
 import axios from "axios";
 import { BASE_URL } from "../config";
 
-const token: string | null = localStorage.getItem("token");
-
 const publicAxios = axios.create({
   baseURL: BASE_URL,
 });
 export const proAxios = axios.create({
   baseURL: BASE_URL,
-  headers: { "x-access-token": token ? token : "" },
 });
 
 type User = {
