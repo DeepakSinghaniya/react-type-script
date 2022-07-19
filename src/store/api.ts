@@ -34,3 +34,7 @@ export const signIn = (user: { email: string; password: string }) => {
 export const addProduct = (product: Product) => {
   return proAxios.post("/products/", product);
 };
+
+export const getProducts = () => {
+  return proAxios.get("/products/");
+};
